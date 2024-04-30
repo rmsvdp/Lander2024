@@ -19,7 +19,8 @@ public class SimEngine {
     final double GMOON =  1.62;        // Gravedad cuerpo : Luna = 1.62
     final double GMARS =  3.71;        // Gravedad cuerpo : Marte = 3.71 
     */
-	    
+	   
+    
     
 	public void sim_frame() {
 		
@@ -32,18 +33,26 @@ public class SimEngine {
         dist_ant = dist;
 	}
 
-	public double getDist() {	return dist;	}
-	public void setDist(double dist) {	this.dist = dist;	}
-	public double getAcel() {	return acel;	}
-	public void setAcel(double acel) {	this.acel = acel;	}
-	public double getVel() {	return vel;	}
-	public void setVel(double vel) {	this.vel = vel;	}
-	public int getTiempo() {	return tiempo;	}
-	public void setTiempo(int tiempo) {	this.tiempo = tiempo;	}
-	public double getG() {	return G;	}
-	public void setG(double g) {	G = g;	}
-	public int getDt() {	return dt;	}
-	public void setDt(int dt) {	this.dt = dt;	}
+	public SimEngine(double dist_ant, double vel_ant,  double g, int dt) {
+		super();
+		this.dist_ant = dist_ant;		// Distancia de entrada a la simulación
+		this.vel_ant = vel_ant;			// velocidad de entrada
+		G = g;							// G del planeta / satélite
+		this.dt = dt;					// Valor del dt
+	}
+
+	public double getDist() 			{	return dist;	}
+	public void setDist(double dist) 	{	this.dist = dist;	}
+	public double getAcel() 			{	return acel;	}
+	public void setAcel(double acel) 	{	this.acel = acel;	}
+	public double getVel() 				{	return vel;	}
+	public void setVel(double vel) 		{	this.vel = vel;	}
+	public int getTiempo() 				{	return tiempo;	}
+	public void setTiempo(int tiempo) 	{	this.tiempo = tiempo;	}
+	public double getG() 				{	return G;	}
+	public void setG(double g) 			{	G = g;	}
+	public int getDt() 					{	return dt;	}
+	public void setDt(int dt) 			{	this.dt = dt;	}
 	
 	
 }
