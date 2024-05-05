@@ -2,7 +2,7 @@
 public class Lander {
 
 	// Artibutos del Lander
-	    private String nombre;
+	private String nombre;
 	private double impulso=0;                  // Impulso retrocohetes en m·s-2
     private int nivel_impulso=0;               // Escala discreta de niveles de impulso
     private double fuel_a_quemar;              // Fuel que se gasta en cada igninción
