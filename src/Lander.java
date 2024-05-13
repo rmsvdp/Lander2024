@@ -18,6 +18,13 @@ public class Lander {
     private final double thrust_level[] =      // Impulso de los motores ( 10 niveles ) 
                 { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0,  8.50, 20.0};
 	
+    public Lander(String nombre, double fuel_deposito, double res_tren) {
+		super();
+		this.nombre = nombre;
+		this.fuel_deposito = fuel_deposito;
+		this.res_tren = res_tren;
+	}
+	
     // Auxilares ( por decidir si se usan)
     /*
     private double dist=0;                     // Distancia a la superficie m
