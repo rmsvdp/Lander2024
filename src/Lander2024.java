@@ -1,5 +1,6 @@
 import java.text.DecimalFormat;
 import java.util.Scanner;
+
 import java.sql.*;
 
 public class Lander2024 {
@@ -26,18 +27,67 @@ public class Lander2024 {
     }
 
     public int get_access() {
-    	int _id = 0;					// No hay acceso
+    	int _id = 1;					
     	
     	return _id;
     }
     
     public int play() {
     	int res = -1; // juego no terminado
-    	
+		String[] opcs = {	"Elegir Modulo",
+							"Elegir Escenario",
+							"Iniciar Simulación",
+							"Puntuaciones",
+							"Creditos"};
+		
+		Menu mppal = new Menu(opcs);
+		mppal.setTitulo("LANDER 2024");
+		Boolean salir = false;
+		Integer opcion = 0;
+		Lander l=null;
+		PerfilPot ppot =null;
+		Escenario e=null;
+		
+		while (!salir) {
+		//---------------------------------------- gestionar menú de opciones
+		mppal.mostrarMenu();
+		opcion = mppal.eligeOpcion();
+		switch(opcion) {
+			case 1:
+				System.out.println("\nELIGE MODULO LUNAR");
+				break;
+			case 2:
+				System.out.println("\nELIGE ESCENARIO");
+				break;
+			case 3:
+				System.out.println("\nINICIAR SIMULACION");
+				break;
+			case 4:
+				System.out.println("\nPUNTUACIONES");
+				break;
+			case 5:
+				System.out.println("\nCREDITOS");
+				break;
+			case 0:
+				salir = true;
+				break;
+		} // procesa opción de menú
+		
+		} // fin bucle principal
     	return res;
     }
     public void reset_account() {}
 
+    
+    public Lander eligeLander() {
+    	
+    	// Conecta a la base de datos
+    	// Crea un menú con los lander disponibles
+    	// Elige 1
+    	// Salir
+    	
+    	return null;
+    }
  /*   
     public void runStructured(){
         double dist=0;                     // Distancia a la superficie m

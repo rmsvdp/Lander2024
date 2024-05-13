@@ -5,7 +5,7 @@ public class DAOMySql {
 
 	public static Connection c;
 	
-	public DAOMySql() {
+	public DAOMySql(String modo) {
 		
 		String server_ip    =   "localhost";
         String server_port  =   "3306";
@@ -15,7 +15,16 @@ public class DAOMySql {
         String dbcs;        
 
         try{  
-            dbcs = "jdbc:mysql://" + server_ip + ":" + server_port + "/" + database;
+        	switch (modo) {
+        	case "remote":
+        		dbcs = "jdbc:mysql://" + server_ip + ":" + server_port + "/" + database;
+        	break;
+        	case "local":
+        		dbcs = "jdbc:mysql://" + server_ip + ":" + server_port + "/" + database;
+        	break;
+        	default:
+        		dbcs = "jdbc:mysql://" + server_ip + ":" + server_port + "/" + database;
+        	}
             c=DriverManager.getConnection (dbcs,_usr,_pwd);  
         }catch(Exception e){ 
             System.out.println(e);
