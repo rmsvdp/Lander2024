@@ -10,7 +10,7 @@ public class Lander {
     private int tiempo = 0;                    // Tiempo de simulación
     private double res_tren;				   // Resistencia del tren de aterrizaje
 
-    private PerfilPot tl;						// Nivel de potencia configurado
+    private PerfilPot perfPot;						// Nivel de potencia configurado
 
     // Constantes
     
@@ -23,8 +23,14 @@ public class Lander {
 		this.nombre = nombre;
 		this.fuel_deposito = fuel_deposito;
 		this.res_tren = res_tren;
+		this.perfPot = null;
 	}
 	
+    public void setPerfPot(PerfilPot p) {
+    	
+    	this.perfPot = p;
+    }
+    
     // Auxilares ( por decidir si se usan)
     /*
     private double dist=0;                     // Distancia a la superficie m
