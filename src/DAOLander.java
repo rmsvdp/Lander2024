@@ -11,7 +11,7 @@ public class DAOLander {
 	
 
 	public DAOLander(String Modo) {
-		DAOMySql dms = new DAOMySql("local");
+		DAOMySql dms = new DAOMySql(Modo);
 		if (dms.c!=null) {
 			_c = dms.c;
 		}
