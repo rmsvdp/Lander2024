@@ -20,7 +20,7 @@ public class SimEngine {
     final double GMARS =  3.71;        // Gravedad cuerpo : Marte = 3.71 
     */
 	   
-    
+    public SimEngine() {}
     
 	public void sim_frame() {
 		

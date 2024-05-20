@@ -17,9 +17,10 @@ public class Lander2024 {
 
     public void runOop(){
         System.out.println("Iniciando aplicación ...");
-        if (get_access()!=0) {
+        Integer idUser = get_access();
+        if (idUser!=0) {
         	
-        	if (play()!=0) {
+        	if (play(idUser)!=0) {
         		reset_account();
         	}
         }
@@ -32,7 +33,7 @@ public class Lander2024 {
     	return _id;
     }
     
-    public int play() {
+    public int play(Integer Usuario) {
     	int res = -1; // juego no terminado
 		String[] opcs = {	"Elegir Modulo",
 							"Elegir Escenario",
@@ -55,11 +56,15 @@ public class Lander2024 {
 		switch(opcion) {
 			case 1:
 				System.out.println("\nELIGE MODULO LUNAR");
+				l = eligeLander();
 				break;
 			case 2:
 				System.out.println("\nELIGE ESCENARIO");
+				e = eligeEscenario();
 				break;
 			case 3:
+				if ((l!= null) && (e!=null))
+					runSim(Usuario,l,e);
 				System.out.println("\nINICIAR SIMULACION");
 				break;
 			case 4:
@@ -87,6 +92,27 @@ public class Lander2024 {
     	// Salir
     	
     	return null;
+    }
+    
+    public Escenario eligeEscenario() {
+    	
+    	// Conecta a la base de datos
+    	// Crea un menú con los escenarios disponibles
+    	// Elige 1
+    	// Salir
+    	
+    	return null;
+    }
+    
+    public void runSim(Integer user,Lander l, Escenario e) {
+    	
+    	Simulacion sim = new Simulacion(user,l,e);
+    	sim.init();
+    	while (sim.getSe().getDist()>0) {
+    		sim.getSe().sim_frame();
+    		sim.show();
+    	}
+    	
     }
  /*   
     public void runStructured(){

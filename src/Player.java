@@ -9,7 +9,14 @@ public class Player {
 	private Date fechaLogin;
 	
 	
-	
+	/** 
+	 * Recupera un jugador de la base de datos
+	 * @param Id código único de usuario
+	 */
+	public Player(Integer Id) {
+		
+		
+	}
 	public Player(String nombre, String pwd, String grupo) {
 		super();
 		this.nombre = nombre;
