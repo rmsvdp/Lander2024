@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Simulacion {
 
@@ -73,9 +74,43 @@ public class Simulacion {
 	 * @return
 	 */
 	public boolean init() {
-		
+        System.out.println("TIEMPO  DISTANCIA   VEL        FUEL      NIVEL IMPULSO"); // Tablero de indicadores
+        System.out.println("------------------------------------------------------");
 		return true;
 	}
+	
+	/**
+	 * Muestra panel de indicadores
+	 */
+	public void muestraPanel() {
+		/*
+		 * 
+		 DecimalFormat df = new DecimalFormat("+0000.00;-0000.00");
+		 // Muestra valores de los parámetros de la simulación, formateados en columnas
+         System.out.printf("%03d    %s    %s    %04d        ",tiempo,df.format(dist),df.format(vel),(int) fuel_deposito);
+		 */
+	}
+	
+	public int aplicaMotor() {
+		
+		int impulso=0;
+		int nivel_impulso = 0;
+		
+		Scanner sc = new Scanner(System.in);
+		
+        System.out.print("¿(0-9)? >");                      // Solicita nivel de impulso       
+		nivel_impulso = sc.nextInt();                       // Lectura de teclado
+        /*
+		impulso = lander.getPerfPot(nivel_impulso);         // Elijo, en función del nivel el impulso instantáneo
+        if (fuel_deposito == 0) nivel_impulso =0;           // Si no queda fuel , no tiene efecto la elección
+		// Consumo de combustible
+        fuel_a_quemar = impulso * 2;                        // No es una simulación realista
+        fuel_deposito = fuel_deposito - fuel_a_quemar;      // Actualizo la reserva de fuel
+        if (fuel_deposito<0) fuel_deposito = 0;             // Eliminar incosistencias en el cálculo
+        */
+		return impulso;
+	}
+	
 	
 	/**
 	 * Salva los datos de simulación en base de datos

@@ -108,9 +108,12 @@ public class Lander2024 {
     	
     	Simulacion sim = new Simulacion(user,l,e);
     	sim.init();
-    	while (sim.getSe().getDist()>0) {
-    		sim.getSe().sim_frame();
-    		sim.show();
+    	SimEngine se = sim.getSe();		// Recupera el motor de simulación
+    	while (se.getDist()>0) {		// bucle principal de la simulación
+    		sim.muestraPanel();			// Mostrar los resultados
+    		sim.aplicaMotor();			// Acciona motores
+    		se.sim_frame();				// Calcula física
+
     	}
     	
     }

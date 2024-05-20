@@ -26,6 +26,10 @@ public class Lander {
 		this.perfPot = null;
 	}
 	
+    public double getPerfPot(int nivel) {
+    		
+    	return perfPot.potencia[nivel];
+    }
     public void setPerfPot(PerfilPot p) {
     	
     	this.perfPot = p;

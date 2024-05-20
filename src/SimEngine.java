@@ -24,6 +24,7 @@ public class SimEngine {
     
 	public void sim_frame() {
 		
+
         // Simulación física de la aceleración, velocidad y distancia en cada intervalo de tiempo
         acel =impulso-G;                   
         vel = vel_ant+ acel*dt;
