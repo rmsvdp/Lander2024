@@ -9,7 +9,6 @@ public class Lander2024 {
     public static void main(String[] args) throws Exception {
        
         Lander2024 l = new Lander2024();
-
         //l.runStructured();    // Versión clásica sin persistencia
         l.runOop();             // Versión oop con base de datos 
  
@@ -18,8 +17,7 @@ public class Lander2024 {
     public void runOop(){
         System.out.println("Iniciando aplicación ...");
         Integer idUser = get_access();
-        if (idUser!=0) {
-        	
+        if (idUser!=0) {       	
         	if (play(idUser)!=0) {
         		reset_account();
         	}
@@ -28,8 +26,7 @@ public class Lander2024 {
     }
 
     public int get_access() {
-    	int _id = 1;					
-    	
+    	int _id = 1;					  	
     	return _id;
     }
     
@@ -107,15 +104,12 @@ public class Lander2024 {
     public void runSim(Integer user,Lander l, Escenario e) {
     	
     	Simulacion sim = new Simulacion(user,l,e);
-    	sim.init();
-    	SimEngine se = sim.getSe();		// Recupera el motor de simulación
-    	while (se.getDist()>0) {		// bucle principal de la simulación
-    		sim.muestraPanel();			// Mostrar los resultados
-    		sim.aplicaMotor();			// Acciona motores
-    		se.sim_frame();				// Calcula física
-
+    	sim.init();   	
+    	while (sim.getSe().getDist()>0) {		// bucle principal de la simulación
+    		sim.muestraPanel();					// Mostrar los resultados
+    		sim.aplicaMotor(l);					// Acciona motores
+    		sim.getSe().sim_frame();			// Calcula física
     	}
-    	
     }
  /*   
     public void runStructured(){
