@@ -35,7 +35,7 @@ public class DAOLander {
 				//-- Datos principales lander
 				id_lander = rs.getInt("id_lander");
 				perfil_pot = rs.getInt("perfil_pot");
-				Lander nlan = new Lander(rs.getString("nombre"),rs.getDouble("t_a"),rs.getInt("fuel"));
+				Lander nlan = new Lander(rs.getString("nombre"),rs.getInt("fuel"),rs.getDouble("t_a"));
 				//-- Datos del perfil de potencia
 				DAOPerfilPot dpp = new DAOPerfilPot("local");
 				PerfilPot p =dpp.findPerfilById(perfil_pot);

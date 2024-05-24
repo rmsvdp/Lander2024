@@ -21,7 +21,7 @@ nombre varchar(32) not null,
 t_a double default 0, -- tren de ate
 fuel double not null,-- deposito combustible
 perfil_pot int default 0  -- Sólo se elige un perfil y no 
--- se guarda la elección.
+-- se guarda la elección. 
 );
 -- Modificada la clave principal
 
@@ -42,9 +42,9 @@ id_config int auto_increment primary key
 create table escenario(
 id_escenario int auto_increment primary key,
 nombre varchar(24) not null, -- Nombre de la estrella/planeta
-gravedad float not null, -- Gravedad del cuerpo astral
-ve float not null, -- velocida de entrada
-he int not null -- altura de entrada
+gravedad double not null, -- Gravedad del cuerpo astral
+ve double not null, -- velocida de entrada
+he double not null -- altura de entrada
 );
 
 create table simulacion(
