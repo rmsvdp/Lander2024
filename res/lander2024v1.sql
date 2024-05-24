@@ -18,8 +18,8 @@ estado tinyint default 0  -- 0 no esta jugando y 1 esta jugando
 create table lander(
 id_lander int auto_increment primary key,
 nombre varchar(32) not null,
-t_a float default 0, -- tren de ate
-fuel int not null,-- deposito combustible
+t_a double default 0, -- tren de ate
+fuel double not null,-- deposito combustible
 perfil_pot int default 0  -- Sólo se elige un perfil y no 
 -- se guarda la elección.
 );

@@ -133,6 +133,7 @@ public class Lander2024 {
     		sim.aplicaMotor(l);					// Acciona motores
     		sim.getSe().sim_frame();			// Calcula física
     	}
+    	sim.show_result(); 						// Resultado Final de la simulación
     }
  /*   
     public void runStructured(){
