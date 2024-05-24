@@ -1,11 +1,12 @@
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import java.sql.*;
 
 public class Lander2024 {
 
- 
+	public final String MODO = "local";
     public static void main(String[] args) throws Exception {
        
         Lander2024 l = new Lander2024();
@@ -25,8 +26,22 @@ public class Lander2024 {
         System.out.println("Terminando aplicación ...");
     }
 
+    /**
+     * Concede acceso a la plataforma
+     * @return
+     */
     public int get_access() {
-    	int _id = 1;					  	
+    	int _id ;	
+    	System.out.println("Accediendo a la plataforma ...");
+    	DAOMySql dms = new DAOMySql(MODO);
+    	if (dms.c == null) {
+    		System.out.println("Plataforma no disponible!");
+    		_id=0;
+    	}
+    	else {
+    		System.out.println("Acceso concedido!");
+    		_id = 1;	// Ususario RMS sólo para pruebas
+    	}
     	return _id;
     }
     
@@ -52,23 +67,31 @@ public class Lander2024 {
 		opcion = mppal.eligeOpcion();
 		switch(opcion) {
 			case 1:
-				System.out.println("\nELIGE MODULO LUNAR");
+				//System.out.println("\nELIGE MODULO LUNAR");
 				l = eligeLander();
+				if (l!=null)
+					System.out.println("MODULO --> "+l);
 				break;
 			case 2:
-				System.out.println("\nELIGE ESCENARIO");
+				//System.out.println("\nELIGE ESCENARIO");
 				e = eligeEscenario();
+				if (e!=null)
+					System.out.println("ESCENARIO --> "+e);
 				break;
 			case 3:
 				if ((l!= null) && (e!=null))
 					runSim(Usuario,l,e);
-				System.out.println("\nINICIAR SIMULACION");
+				else
+					System.out.println("Elija primero módulo y escenario válidos");
+				//System.out.println("\nINICIAR SIMULACION");
 				break;
 			case 4:
 				System.out.println("\nPUNTUACIONES");
+				System.out.println("\n** No implementado");
 				break;
 			case 5:
 				System.out.println("\nCREDITOS");
+				System.out.println("\n** No implementado");
 				break;
 			case 0:
 				salir = true;
@@ -84,21 +107,21 @@ public class Lander2024 {
     public Lander eligeLander() {
     	
     	// Conecta a la base de datos
-    	// Crea un menú con los lander disponibles
-    	// Elige 1
-    	// Salir
-    	
-    	return null;
+    	DAOLander dl = new DAOLander(MODO);
+    	// TODO Crea un menú con los lander disponibles
+    	// Elige el primero (id_lander =1)
+    	Lander myLander = dl.getLanders().get(0);
+    	return myLander;
     }
     
     public Escenario eligeEscenario() {
     	
     	// Conecta a la base de datos
-    	// Crea un menú con los escenarios disponibles
-    	// Elige 1
-    	// Salir
-    	
-    	return null;
+    	DAOEscenario de = new DAOEscenario(MODO);
+    	// TODO Crea un menú con los lander disponibles
+    	// Elige el primero (id_lander =1)
+    	Escenario myEscenario = de.getEscenarios().get(0);
+    	return myEscenario;
     }
     
     public void runSim(Integer user,Lander l, Escenario e) {

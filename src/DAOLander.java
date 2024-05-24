@@ -25,12 +25,21 @@ public class DAOLander {
 	public ArrayList<Lander>getLanders() {
 		
 		ArrayList<Lander> all = new ArrayList<Lander>();
+		Integer id_lander;
+		Integer perfil_pot;
 		try {
 			Statement stm = _c.createStatement();
-			String ssql = "SELECT * FROM Lander";
+			String ssql = "SELECT * FROM lander ORDER BY id_lander";
 			ResultSet rs = stm.executeQuery(ssql);
 			while (rs.next()) {
-				Lander nlan = new Lander(rs.getString(1),rs.getDouble(2),rs.getInt(3));
+				//-- Datos principales lander
+				id_lander = rs.getInt("id_lander");
+				perfil_pot = rs.getInt("perfil_pot");
+				Lander nlan = new Lander(rs.getString("nombre"),rs.getDouble("t_a"),rs.getInt("fuel"));
+				//-- Datos del perfil de potencia
+				DAOPerfilPot dpp = new DAOPerfilPot("local");
+				PerfilPot p =dpp.findPerfilById(perfil_pot);
+				nlan.setPerfPot(p);
 				all.add(nlan);
 			}
 		} catch (SQLException e) {
@@ -38,7 +47,7 @@ public class DAOLander {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return all;
 	}
 	
 	

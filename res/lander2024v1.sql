@@ -28,7 +28,7 @@ perfil_pot int default 0  -- Sólo se elige un perfil y no
 create table perfil_pot(
 id_perfil int not null,
 nivel int not null,
-valor int not null,
+valor float not null,
 primary key(id_perfil,nivel)
 );
 

@@ -11,12 +11,15 @@ public class Lander {
     private double res_tren;				   // Resistencia del tren de aterrizaje
     private PerfilPot perfPot;				   // Nivel de potencia configurado
 
+    
+
     // Constantes
     
     private final double VEL_MAX = 20.0;       // Resistencia del tren de aterrrizaje m.s-1
     private final double thrust_level[] =      // Impulso de los motores ( 10 niveles ) 
                 { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0,  8.50, 20.0};
 	
+    public Lander() {}
     public Lander(String nombre, double fuel_deposito, double res_tren) {
 		super();
 		this.nombre = nombre;
@@ -42,6 +45,10 @@ public class Lander {
 
 	public double getRes_tren() {	return res_tren;	}
     
+    public String toString() {
+    	return nombre + "  (Fuel)  "+ fuel_deposito+ "  (Tren AT)  "+ res_tren;
+    }
+	
     // Auxilares ( por decidir si se usan)
     /*
     private double dist=0;                     // Distancia a la superficie m

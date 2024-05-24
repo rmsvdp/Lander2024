@@ -42,6 +42,8 @@ public class Escenario {
 		this.he = he;
 	}
 	
-
+    public String toString() {
+    	return nombre + "  (G)  "+ g + "  (Ve)  "+ ve+ "  (He)  "+ he;
+    }
 	
 }
