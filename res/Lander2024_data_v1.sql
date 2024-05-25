@@ -7,17 +7,17 @@ INSERT INTO usuario (nick,pwd,grupo,fechaUC) VALUES('PLAYER3','pwd3','1WET','199
 
 -- Tabla de escenarios
 
-INSERT INTO escenario (nombre,gravedad,ve,he) VALUES ('MOON',1.62,2.0,3500);
-INSERT INTO escenario (nombre,gravedad,ve,he) VALUES ('MARS',3.71,0.0,2500);
-INSERT INTO escenario (nombre,gravedad,ve,he) VALUES ('CALLISTO',1.235,4.3,3500);
-INSERT INTO escenario (nombre,gravedad,ve,he) VALUES ('PLUTO',0.62,9.8,1750);
+INSERT INTO escenario (nombre,gravedad,ve,he) VALUES ('MOON',1.62,2.0,3500.0);
+INSERT INTO escenario (nombre,gravedad,ve,he) VALUES ('MARS',3.71,0.0,2500.0);
+INSERT INTO escenario (nombre,gravedad,ve,he) VALUES ('CALLISTO',1.235,4.3,3500.0);
+INSERT INTO escenario (nombre,gravedad,ve,he) VALUES ('PLUTO',0.62,9.8,1750.0);
 
 -- Tabla de Landers
 
-INSERT INTO lander (nombre,t_a,fuel) VALUES ('APOLLO-XIII',24,2800);
-INSERT INTO lander (nombre,t_a,fuel) VALUES ('PATHFINDER',48,5600);
-INSERT INTO lander (nombre,t_a,fuel) VALUES ('MARS-V',24,2800);
-INSERT INTO lander (nombre,t_a,fuel) VALUES ('EUROPA-VII',24,2800);
+INSERT INTO lander (nombre,t_a,fuel) VALUES ('APOLLO-XIII',24.0,2800.0);
+INSERT INTO lander (nombre,t_a,fuel) VALUES ('PATHFINDER',48.0,5600.0);
+INSERT INTO lander (nombre,t_a,fuel) VALUES ('MARS-V',24.0,2800.0);
+INSERT INTO lander (nombre,t_a,fuel) VALUES ('EUROPA-VII',24.0,2800.0);
 
 -- Periles de  Potencia
 -- Perfil 1

@@ -126,13 +126,17 @@ public class Lander2024 {
     
     public void runSim(Integer user,Lander l, Escenario e) {
     	
+    	Double altura = 0.0;
     	Simulacion sim = new Simulacion(user,l,e);
-    	sim.init();   	
-    	while (sim.getSe().getDist()>0) {		// bucle principal de la simulación
+   	
+    	do {						// bucle principal de la simulación
+    		
     		sim.muestraPanel();					// Mostrar los resultados
     		sim.aplicaMotor(l);					// Acciona motores
     		sim.getSe().sim_frame();			// Calcula física
+    		altura = sim.getSe().getDist();		// Comprobar altura
     	}
+    	while (altura>0 && !(sim.__break)) ;
     	sim.show_result(); 						// Resultado Final de la simulación
     }
  /*   

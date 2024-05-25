@@ -7,7 +7,7 @@ public class DAOMySql {
 	
 	public DAOMySql(String modo) {
 		
-		String server_ip    =   "localhost";
+		String server_ip    =   "192.168.1.99"; // localhost	192.168.1.99
         String server_port  =   "3306";
         String database     =   "lander2024";
         String _usr         =   "root";

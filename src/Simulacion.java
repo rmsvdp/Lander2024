@@ -12,6 +12,9 @@ public class Simulacion {
 	private Player user;					// Jugador que la efectúa
 	private Escenario planet;				//	Escenario de la simulación
 	private ArrayList<DatosSim> simData = new ArrayList<DatosSim>();	// Datos de la simulación
+	private static boolean outOfFuel = false;
+	public boolean __break = false;			// Flag para terminar la simulación ( el usuario abandona)
+	// Para abandonar hay que introducir un nivel de impulso = -1
 	
 	// Constructor
 	public Simulacion(Integer user, Lander lander, Escenario planet) {
@@ -20,7 +23,7 @@ public class Simulacion {
 		this.user = new Player(user);
 		this.planet = planet;
 		this.timestamp = LocalDateTime.now();
-		this.se = new SimEngine();
+		init();
 	}
 	// Getter y Setter
 	public LocalDateTime getTimestamp() {		return timestamp;	}
@@ -44,10 +47,7 @@ public class Simulacion {
 	 */
 	public void init() {
 		// Valores iniciales
-		this.se = new SimEngine();		// Valores del motor inicializados
-		this.se.setG(planet.getG());			// Fijar gravedad
-		this.se.setVel(planet.getVe());		// fijar velocidad de entrada
-		this.se.setDist(planet.getHe());		// fijar punto de entrada (altitud)
+		this.se = new SimEngine(planet.getHe(),planet.getVe(),planet.getG());
 	}
 	
 	/**
@@ -74,16 +74,39 @@ public class Simulacion {
 		
 		Double impulso=0.0;
 		Integer nivel_impulso = 0;
-		Scanner sc = new Scanner(System.in);
-        System.out.print("¿(0-9)? >");                      	// Solicita nivel de impulso       
-		nivel_impulso = sc.nextInt();                       	// Lectura de teclado
-		impulso = lander.getPerfPot(nivel_impulso);        		// Elijo, en función del nivel el impulso instantáneo
+		
+		// Sólo si tenemos fuel para quemar
+		if (!outOfFuel) {
+			Scanner sc = new Scanner(System.in);
+	        System.out.print("¿(0-9)? >");                      	// Solicita nivel de impulso       
+			nivel_impulso = sc.nextInt();                       	// Lectura de teclado
+			if (nivel_impulso ==-1) {
+				nivel_impulso =0;
+				__break = true;										// Abandonar la simulación
+			}
+			if (nivel_impulso <0) nivel_impulso =0;					// Sencilla comprobación de límites
+			if (nivel_impulso >9) nivel_impulso =9;
+			
+		}
+		else {
+			System.out.println("SIN FUEL , CAIDA LIBRE!");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		if (lander.getFuel_deposito() == 0) nivel_impulso =0;   // Si no queda fuel , no tiene efecto la elección
+		impulso = lander.getPerfPot(nivel_impulso);        		// Elijo, en función del nivel el impulso instantáneo
+		se.setImpulso(impulso);									// Pasar el impulso al motor de simulación.
 		// Consumo de combustible
         lander.setFuel_a_quemar( impulso * 2);      			// No es una simulación realista
         lander.setFuel_deposito(lander.getFuel_deposito() - lander.getFuel_a_quemar());      // Actualizo la reserva de fuel
-		if (lander.getFuel_deposito()<0) 						// Eliminar incosistencias en el cálculo
-				lander.setFuel_deposito(0);             	
+		if (lander.getFuel_deposito()<0) 	{					// Eliminar incosistencias en el cálculo
+				lander.setFuel_deposito(0);  
+				outOfFuel = true;
+		} // Sin fuel
 	}
 	
 	public void show_result() {
@@ -95,21 +118,32 @@ public class Simulacion {
 		Double fuel_deposito = lander.getFuel_deposito();
 		DecimalFormat df = new DecimalFormat("+0000.00;-0000.00");
 		
-        if (Math.abs(se.getVel())>lander.getRes_tren()){
+		if (!this.__break) {
+		
+			if (Math.abs(se.getVel())>lander.getRes_tren()){
                 System.out.println("\nHAS ESTRELLADO LA NAVE");
                 System.out.println("------------------------------------------------");
                 System.out.println("VELOCIDAD DE ENTRADA    : "+ df.format(vel_fin) + " m/s");
                 System.out.println("HAS HECHO UN CRATER DE  : "+ df.format(Math.abs(dist_fin)) + " m");
                 System.out.println("------------------------------------------------");
             }
-        else {
+			else {
                 System.out.println("\nATERRIZAJE EXITOSO!!");
                 System.out.println("------------------------------------------------");
                 System.out.println("TIEMPO DE ATERRIZAJE : " + tiempo + " s");
                 System.out.println("FUEL EN DEPOSITO     : " + fuel_deposito + " l");
                 System.out.println("------------------------------------------------");
-        }
-	}
+			}
+		}
+		else {
+		    System.out.println("\nSIMULACIÓN INTERRUMPIDA POR EL USARIO");
+            System.out.println("------------------------------------------------");
+            System.out.println("TIEMPO DE SIMULACIÓN : " + tiempo + " s");
+            System.out.println("FUEL EN DEPOSITO     : " + fuel_deposito + " l");
+            System.out.println("DISTANCIA A OBJETIVO : " + dist_fin + " m");
+            System.out.println("------------------------------------------------");	
+		} // Misión finalizada o interrumpida  
+	}  // show_result
 	
 	/**
 	 * Salva los datos de simulación en base de datos
