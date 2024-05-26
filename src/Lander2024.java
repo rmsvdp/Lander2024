@@ -41,6 +41,11 @@ public class Lander2024 {
     	else {
     		System.out.println("Acceso concedido!");
     		_id = 1;	// Ususario RMS sólo para pruebas
+    		try {
+				dms.c.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
     	}
     	return _id;
     }
@@ -111,6 +116,11 @@ public class Lander2024 {
     	// TODO Crea un menú con los lander disponibles
     	// Elige el primero (id_lander =1)
     	Lander myLander = dl.getLanders().get(0);
+    	try {
+			dl._c.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     	return myLander;
     }
     
@@ -119,8 +129,13 @@ public class Lander2024 {
     	// Conecta a la base de datos
     	DAOEscenario de = new DAOEscenario(MODO);
     	// TODO Crea un menú con los lander disponibles
-    	// Elige el primero (id_lander =1)
+    	// Elige el primero
     	Escenario myEscenario = de.getEscenarios().get(0);
+    	try {
+			de._c.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     	return myEscenario;
     }
     

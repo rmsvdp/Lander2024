@@ -8,9 +8,10 @@ public class DAOPerfilPot {
 	
 	
 	public static Connection _c;
-	
+	public static String _MODO;
 
 	public DAOPerfilPot(String Modo) {
+		_MODO= Modo;
 		DAOMySql dms = new DAOMySql(Modo);
 		if (dms.c!=null) {
 			_c = dms.c;

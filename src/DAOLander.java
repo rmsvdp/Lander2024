@@ -8,9 +8,10 @@ public class DAOLander {
 
 	
 	public static Connection _c;
-	
+	public static String _MODO;
 
 	public DAOLander(String Modo) {
+		_MODO= Modo;
 		DAOMySql dms = new DAOMySql(Modo);
 		if (dms.c!=null) {
 			_c = dms.c;
@@ -37,11 +38,14 @@ public class DAOLander {
 				perfil_pot = rs.getInt("perfil_pot");
 				Lander nlan = new Lander(rs.getString("nombre"),rs.getInt("fuel"),rs.getDouble("t_a"));
 				//-- Datos del perfil de potencia
-				DAOPerfilPot dpp = new DAOPerfilPot("local");
+				DAOPerfilPot dpp = new DAOPerfilPot(_MODO);
 				PerfilPot p =dpp.findPerfilById(perfil_pot);
+				dpp._c.close();  //-- Si no se cierran, van quedando hasta que termine la aplicación
+								 //-- o las elimina el motor si no se usan
 				nlan.setPerfPot(p);
 				all.add(nlan);
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
