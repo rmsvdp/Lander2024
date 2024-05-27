@@ -16,6 +16,22 @@ public class DAOEscenario {
 		else _c= null;
 	}
 
+	public Integer getIdbyEscenario(Escenario es) {
+		
+		Integer result = -1;
+		Statement stm;
+		try {
+			stm = _c.createStatement();
+			String ssql = "SELECT id_escenario FROM lander WHERE nombre = '"+es.getNombre()+"'";
+			ResultSet rs = stm.executeQuery(ssql);
+			
+			if (rs.next()) { result = rs.getInt("id_escenario");}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	/**
 	 * Trae la lista de Landers registrados en la base de datos
 	 * @return Colección de objetos Lander registrados

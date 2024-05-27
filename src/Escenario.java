@@ -1,3 +1,6 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Escenario {
@@ -17,31 +20,16 @@ public class Escenario {
 		this.he = he;
 	}
 	
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public Double getG() {
-		return g;
-	}
-	public void setG(Double g) {
-		this.g = g;
-	}
-	public Double getVe() {
-		return ve;
-	}
-	public void setVe(Double ve) {
-		this.ve = ve;
-	}
-	public Double getHe() {
-		return he;
-	}
-	public void setHe(Double he) {
-		this.he = he;
-	}
 	
+
+	public String getNombre() 				{	return nombre;	}
+	public void setNombre(String nombre) 	{	this.nombre = nombre;	}
+	public Double getG() 					{	return g;	}
+	public void setG(Double g) 				{	this.g = g;	}
+	public Double getVe() 					{	return ve;	}
+	public void setVe(Double ve) 			{	this.ve = ve;	}
+	public Double getHe() 					{	return he;	}
+	public void setHe(Double he) 			{	this.he = he;	}
     public String toString() {
     	return nombre + "  (G)  "+ g + "  (Ve)  "+ ve+ "  (He)  "+ he;
     }

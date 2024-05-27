@@ -54,5 +54,20 @@ public class DAOLander {
 		return all;
 	}
 	
+	public Integer getIdbyLander(Lander l) {
+		
+		Integer result = -1;
+		Statement stm;
+		try {
+			stm = _c.createStatement();
+			String ssql = "SELECT id_lander FROM lander WHERE nombre = '"+l.getNombre()+"'";
+			ResultSet rs = stm.executeQuery(ssql);
+			
+			if (rs.next()) { result = rs.getInt("id_lander");}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }

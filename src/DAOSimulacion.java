@@ -1,4 +1,7 @@
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DAOSimulacion {
@@ -15,6 +18,8 @@ public class DAOSimulacion {
 		else _c= null;
 	}
 
+
+	
 	/**
 	 * Almacena en base de datos , la simulación y sus datos
 	 * así como la puntuación si es preciso en la tabla de puntaciones
@@ -23,11 +28,31 @@ public class DAOSimulacion {
 	 */
 	public boolean saveSimulacion(Simulacion s) {
 		
-		// Salva Simulación
-		// Salva Datos simulacion
-		// Salva Puntuación
+		// Hacerlo transaccional, mediante el resultado
 		
+		if (salva_objeto(s)) {// Salva Simulación
+			if (salva_datos(s)) {// Salva Datos simulacion
+				salva_puntuacion(s);// Salva Puntuación
+			}
+		}
 		return true;
+	}
+	
+	public boolean salva_objeto(Simulacion s) {
+		boolean result = false;
+		
+		
+		return result;
+	}
+	
+	public boolean salva_datos(Simulacion s) {
+		boolean result = false;
+		return result;
+	}
+	
+	public boolean salva_puntuacion(Simulacion s) {
+		boolean result = false;
+		return result;
 	}
 	
 	/** 

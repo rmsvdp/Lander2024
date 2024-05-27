@@ -64,9 +64,10 @@ fuel float not null,
 dist float not null,
 id_sim int not null
 );
-
+ 
 create table puntuacion(
 id_usuario int not null,
+id_simulacion int not null
 tiempo int not null,
 fuel float not null,
 fecha timestamp);
@@ -83,9 +84,10 @@ ALTER TABLE simulacion ADD FOREIGN KEY (id_usuario)   references usuario(id_usua
 ALTER TABLE simulacion ADD FOREIGN KEY (id_lander)    references lander(id_lander);
 ALTER TABLE simulacion ADD FOREIGN KEY (id_escenario) references escenario(id_escenario);
 ALTER TABLE puntuacion ADD FOREIGN KEY (id_usuario)   references usuario(id_usuario);
+ALTER TABLE puntuacion ADD FOREIGN KEY (id_simulacion)references simulacion(id_sim);
 ALTER TABLE confg_pot  ADD FOREIGN KEY (id_la)        references lander(id_lander);
-ALTER TABLE confg_pot  ADD FOREIGN KEY (id_perfil) references perfil_pot(id_perfil);
-ALTER TABLE datos_sim  ADD FOREIGN KEY  (id_sim)      references simulacion(id_sim);
+ALTER TABLE confg_pot  ADD FOREIGN KEY (id_perfil) 	  references perfil_pot(id_perfil);
+ALTER TABLE datos_sim  ADD FOREIGN KEY (id_sim)      references simulacion(id_sim);
 
 -- FUNCIONES Y PROCEDIMIENTOS
 
