@@ -149,10 +149,12 @@ public class Lander2024 {
     		sim.muestraPanel();					// Mostrar los resultados
     		sim.aplicaMotor(l);					// Acciona motores
     		sim.getSe().sim_frame();			// Calcula física
+    		sim.addSimData(); 					// Registra los datos generados
     		altura = sim.getSe().getDist();		// Comprobar altura
     	}
     	while (altura>0 && !(sim.__break)) ;
     	sim.show_result(); 						// Resultado Final de la simulación
+    	sim.saveSim(MODO);						// Salva resultado en BBDD
     }
  /*   
     public void runStructured(){

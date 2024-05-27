@@ -47,6 +47,13 @@ public class SimEngine {
 	public double getImpulso() 				{	return impulso;	}
 	public void setImpulso(double impulso) 	{	this.impulso = impulso;	}
 	
+	// guarda los datos del instante actual
+	// no se tiene fuel,por lo que se inicializa con valor 0.0
+	public DatosSim getSimData() {
+		DatosSim ds = new DatosSim(dist,acel,vel,impulso,0.0,tiempo); // No tenemos el fuel desde aquí
+		return ds;
+	}
+	
     // Simulación física de la aceleración, velocidad y distancia en cada intervalo de tiempo
     // El valor del impulso se establece desde el objeto que es propietario de este motor
     // de simulación ( la simulación lanzada por el usuario).

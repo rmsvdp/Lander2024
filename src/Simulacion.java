@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,6 +42,13 @@ public class Simulacion {
 
 	// Métodos
 	
+	// Añade un instante de simulación a la simulación
+	// Los datos vendrán de SimEngine, sin el dato de fuel en depósito.
+	public void addSimData() {
+		DatosSim ds = se.getSimData();
+		ds.setFuel(getLander().getFuel_deposito());
+		simData.add(ds);
+	}
 	/**
 	 * Inicializa la simulación
 	 * @return
@@ -149,7 +157,14 @@ public class Simulacion {
 	 * Salva los datos de simulación en base de datos
 	 * @return
 	 */
-	public boolean saveSim() {
+	public boolean saveSim(String Modo) {
+		DAOSimulacion ds = new DAOSimulacion(Modo);
+		try {
+			ds.saveSimulacion(this);
+			ds._c.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 	
