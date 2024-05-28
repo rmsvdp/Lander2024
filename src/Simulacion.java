@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Simulacion {
 
-	
+	private Integer id=0;					// PK en base de datos
 	private LocalDateTime timestamp;		// Fecha de la simulación
 	private SimEngine se;					// Motor de simulación que se utiliza
 	private Lander lander;					// Módulo que se utiliza
@@ -27,19 +27,21 @@ public class Simulacion {
 		init();
 	}
 	// Getter y Setter
-	public LocalDateTime getTimestamp() {		return timestamp;	}
-	public void setTimestamp(LocalDateTime timestamp) {		this.timestamp = timestamp;	}
-	public SimEngine getSe() {		return se;	}
-	public void setSe(SimEngine se) {		this.se = se;	}
-	public Lander getLander() {		return lander;	}
-	public void setLander(Lander lander) {		this.lander = lander;	}
-	public Player getUser() {		return user;	}
-	public void setUser(Player user) {		this.user = user;	}
-	public Escenario getPlanet() {		return planet;	}
-	public void setPlanet(Escenario planet) {		this.planet = planet;	}
-	public ArrayList<DatosSim> getSimData() {		return simData;	}
+	public LocalDateTime getTimestamp() 				{		return timestamp;	}
+	public void setTimestamp(LocalDateTime timestamp) 	{		this.timestamp = timestamp;	}
+	public SimEngine getSe() 							{		return se;	}
+	public void setSe(SimEngine se) 					{		this.se = se;	}
+	public Lander getLander() 							{		return lander;	}
+	public void setLander(Lander lander) 				{		this.lander = lander;	}
+	public Player getUser() 							{		return user;	}
+	public void setUser(Player user) 					{		this.user = user;	}
+	public Escenario getPlanet() 						{		return planet;	}
+	public void setPlanet(Escenario planet) 			{		this.planet = planet;	}
+	public ArrayList<DatosSim> getSimData()	 			{		return simData;	}
 	public void setSimData(ArrayList<DatosSim> simData) {		this.simData = simData;	}
-
+	public Integer getId() 								{		return id;	}
+	public void setId(Integer id) 						{		this.id = id;	}
+	
 	// Métodos
 	
 	// Añade un instante de simulación a la simulación
