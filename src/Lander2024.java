@@ -106,17 +106,46 @@ public class Lander2024 {
 		} // fin bucle principal
     	return res;
     }
-    public void reset_account() {}
+    public void reset_account() {
+    	
+        
+    	
+    	
+    }
 
     
     public Lander eligeLander() {
     	
+    	boolean boo = false; 
     	// Conecta a la base de datos
     	DAOLander dl = new DAOLander(MODO);
+		Lander myLander = null;
     	// TODO Crea un menú con los lander disponibles
-    	// Elige el primero (id_lander =1)
-    	Lander myLander = dl.getLanders().get(0);
+		ArrayList <Lander> Arraylander = dl.getLanders();
+		String [] opciones = new String [Arraylander.size()];// Tamaño de la array para el menu
+		int i = 0;
+		for(Lander lan : Arraylander){ // Guardar los nombre y cantidad del depósito de los modulos en la array para el menu
+			opciones[i] = "Modulo: "+lan.getNombre() + ", Depósito de combustible: "+ lan.getFuel_deposito();
+			i++;
+		}
+		Menu menu = new Menu(opciones);
     	try {
+			while (!boo) {
+				menu.mostrarMenu();
+				int opt = menu.eligeOpcion();
+				if(opt <= Arraylander.size() && opt > 0){
+					myLander = dl.getLanders().get(opt-1);
+					boo = true;// pongo que salga automaticamente al elegir
+				}
+				else if (opt == 0){
+					boo = true;
+					System.out.println("Salir");
+				}
+				else{
+					System.out.println("La opción no existe");
+				}
+				
+			}
 			dl._c.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -124,20 +153,63 @@ public class Lander2024 {
     	return myLander;
     }
     
-    public Escenario eligeEscenario() {
-    	
-    	// Conecta a la base de datos
-    	DAOEscenario de = new DAOEscenario(MODO);
-    	// TODO Crea un menú con los lander disponibles
-    	// Elige el primero
-    	Escenario myEscenario = de.getEscenarios().get(0);
-    	try {
-			de._c.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    	return myEscenario;
-    }
+    public Escenario eligeEscenario(){ // Devuelve un escenario
+		
+		Escenario escElegido = null;
+		
+		DAOEscenario de = new DAOEscenario("local");		
+		
+		ArrayList<Escenario> escPosibles = de.getEscenarios();
+		int tam = escPosibles.size();
+		
+		Scanner teclado = new Scanner(System.in);	
+		
+		String[] opcEsc = new String[tam]; //Formamos las opciones
+		
+			for(int i=0; i<opcEsc.length; i++){
+				opcEsc[i] = escPosibles.get(i).getNombre() + " con una gravedad de "+
+							escPosibles.get(i).getG()+" g";
+			}
+		
+		Menu mesc = new Menu(opcEsc);
+		mesc.setTitulo("ESCENARIOS");
+		Integer opEsc = 0;
+		boolean salirEsc = false;
+		
+			while(!salirEsc){
+				
+				mesc.mostrarMenu();
+				opEsc = mesc.eligeOpcion();
+				String conf=" ";
+				
+					if(opEsc>=0 && opEsc<=opcEsc.length){
+						
+						if(opEsc==0){
+							escElegido=null;
+							salirEsc=true;							
+						}
+						
+						else{
+							escElegido = escPosibles.get(opEsc-1);
+							System.out.println("El escenario elegido es: "+escElegido.getNombre()+
+										" con una gravedad de "+escElegido.getG()+" g");
+						
+							System.out.println("¿Confirmación? "+"\t"+"S: Aceptar"); //Pedimos confirmación por si queremos cambiar de escenario
+							System.out.println("               "+"\t"+"Cualquier otra tecla: Cancelar");
+							
+							conf = teclado.next();
+								
+								if(conf.equalsIgnoreCase("S")){
+								salirEsc=true;
+								
+								}
+						}
+					}
+			}
+						
+			return escElegido;
+			
+	}
     
     public void runSim(Integer user,Lander l, Escenario e) {
     	
