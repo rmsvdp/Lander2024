@@ -34,36 +34,20 @@ public class DAOSimulacion {
 	public boolean saveSimulacion(Simulacion s) {
 		
 		// Hacerlo transaccional, mediante el resultado
-		Player p = s.getUser();
-		Lander l = s.getLander();
-		Escenario es = s.getPlanet();
-		DAOPlayer dp = new DAOPlayer(_MODO);
-		DAOLander dl = new DAOLander(_MODO);
-		DAOEscenario de = new DAOEscenario(_MODO);
+		Integer id_player = s.getUser().getId();
+		Integer id_lander = s.getLander().getId();
+		Integer id_escenario = s.getPlanet().getId();
+		Boolean result = true;
 		
-		try {
-			Integer id_player =dp.getIdbyPlayer(p);
-			Integer id_lander = dl.getIdbyLander(l);
-			Integer id_escenario = de.getIdbyEscenario(es);
-			
 			if (salva_objeto(s,id_player,id_lander,id_escenario)) {// Salva Simulación
 				
 				if (salva_datos(s)) {// Salva Datos simulacion
-					salva_puntuacion(s,id_player);// Salva Puntuación
+					result =salva_puntuacion(s);// Salva Puntuación
 				}
+				else result = false;
 			}
-			
-			de._c.close();
-			dl._c.close();
-			dp._c.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		
-
-		
-		return true;
+			else result = false;
+		return result;
 	}
 	
 	public boolean salva_objeto(Simulacion _s,Integer id_player,Integer id_lander,Integer id_escenario) {
@@ -94,17 +78,17 @@ public class DAOSimulacion {
 	}
 	
 	public boolean salva_datos(Simulacion _s) {
-		boolean result = false;
+		boolean result = true;
 		try {
 			Statement st = _c.createStatement();
 			String ssql ="";
+			Integer flag=0;
 			// Volcamos estructura de memoria en base de datos
 			for (DatosSim ds : _s.getSimData()) {
 					ssql = "INSERT (id_sim,tiempo,vel,fuel,dist) INTO datos_sim values(";
 					ssql = ssql + _s.getId()+ "," + ds.getAcel()+ "," +ds.getVel()+","+ds.getImpulso()+","+ds.getFuel()+","+ds.getTiempo();
 					ssql = ssql + ")";
-					result = st.execute(ssql);
-				if (!result) break;  // En cuanto se produzca un error, abandonamos
+					st.execute(ssql);
 			}
 			
 		} catch (SQLException e) {
@@ -115,8 +99,8 @@ public class DAOSimulacion {
 		return result;
 	}
 	
-	public boolean salva_puntuacion(Simulacion _s,Integer id_player) {
-		boolean result = false;
+	public boolean salva_puntuacion(Simulacion _s) {
+		boolean result = true;
 		
 		try {
 			Statement st = _c.createStatement();
@@ -124,15 +108,14 @@ public class DAOSimulacion {
 			long millis=System.currentTimeMillis(); 
 			java.sql.Date _date = new java.sql.Date(millis);
 					ssql = "INSERT (id_usuario,id_simulacion,tiempo,fuel,fecha) INTO puntuacion values(";
-					ssql = ssql + _s.getId()+ "," + _s.getSe().getTiempo()+ "," +_s.getLander().getFuel_deposito()+","
-					+_date + ")";
-					result = st.execute(ssql);
+					ssql = ssql + _s.getUser().getId()+ "," + _s.getId()+","
+					            + _s.getSe().getTiempo()+ "," +_s.getLander().getFuel_deposito()+","
+					            +_date + ")";
+					st.execute(ssql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			result = false;
-		}
-		
-		
+		}	
 		return result;
 	}
 	
