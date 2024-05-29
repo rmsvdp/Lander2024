@@ -2,7 +2,7 @@ import java.sql.Date;
 
 public class Player {
 
-	
+	private Integer id=0;					// PK en base de datos	
 	private String nombre;
 	private String pwd;
 	private String grupo;
@@ -22,7 +22,8 @@ public class Player {
 		this.grupo = grupo;
 	}
 	
-	
+	public Integer getId() 								{		return id;	}
+	public void setId(Integer id) 						{		this.id = id;	}
 	public String getNombre() {		return nombre;	}
 	public void setNombre(String nombre) {		this.nombre = nombre;	}
 	public String getPwd() {		return pwd;	}

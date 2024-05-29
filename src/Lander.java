@@ -1,6 +1,7 @@
 
 public class Lander {
 
+	private Integer id=0;					// PK en base de datos
 	// Artibutos del Lander
 	private String nombre;
 	private double impulso=0;                  // Impulso retrocohetes en m·s-2
@@ -42,7 +43,8 @@ public class Lander {
 	public void setTiempo(int tiempo) {	this.tiempo = tiempo;	}
 	public double getPerfPot(int nivel) { 	return perfPot.potencia[nivel];   }
     public void setPerfPot(PerfilPot p) {  	this.perfPot = p;   }
-
+	public Integer getId() 								{		return id;	}
+	public void setId(Integer id) 						{		this.id = id;	}
 	public double getRes_tren() {	return res_tren;	}
     
     public String toString() {

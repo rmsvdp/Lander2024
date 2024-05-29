@@ -4,7 +4,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Escenario {
-
+	
+	private Integer id=0;					// PK en base de datos
 	private String nombre;		// nombre del planeta o satélite
 	private Double g;			// gravedad del escenario
 	private Double ve;			// velocidad de entrada
@@ -20,7 +21,8 @@ public class Escenario {
 		this.he = he;
 	}
 	
-	
+	public Integer getId() 								{		return id;	}
+	public void setId(Integer id) 						{		this.id = id;	}
 
 	public String getNombre() 				{	return nombre;	}
 	public void setNombre(String nombre) 	{	this.nombre = nombre;	}
