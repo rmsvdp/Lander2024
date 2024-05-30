@@ -119,8 +119,9 @@ public class Simulacion {
 		} // Sin fuel
 	}
 	
-	public void show_result() {
+	public Boolean show_result() {
 		
+		Boolean flag = false;				// Terminación sin salvar puntuación
         // Comprobar la condiciones de aterrizaje y mostrar información sobre el mismo.
 		Double vel_fin = se.getVel();
 		Double dist_fin =se.getDist();
@@ -130,7 +131,8 @@ public class Simulacion {
 		
 		if (!this.__break) {
 		
-			if (Math.abs(se.getVel())>lander.getRes_tren()){
+			flag = (Math.abs(se.getVel())>lander.getRes_tren());
+			if (flag){
                 System.out.println("\nHAS ESTRELLADO LA NAVE");
                 System.out.println("------------------------------------------------");
                 System.out.println("VELOCIDAD DE ENTRADA    : "+ df.format(vel_fin) + " m/s");
@@ -152,7 +154,9 @@ public class Simulacion {
             System.out.println("FUEL EN DEPOSITO     : " + fuel_deposito + " l");
             System.out.println("DISTANCIA A OBJETIVO : " + dist_fin + " m");
             System.out.println("------------------------------------------------");	
-		} // Misión finalizada o interrumpida  
+            flag = false;
+		} // Misión finalizada o interrumpida
+	 return flag;	
 	}  // show_result
 	
 	/**

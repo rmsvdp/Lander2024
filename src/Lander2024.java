@@ -231,8 +231,9 @@ public class Lander2024 {
     		altura = sim.getSe().getDist();		// Comprobar altura
     	}
     	while (altura>0 && !(sim.__break)) ;
-    	sim.show_result(); 						// Resultado Final de la simulación
-    	sim.saveSim(MODO);						// Salva resultado en BBDD
+    	 						// Resultado Final de la simulación
+    	if (sim.show_result())
+    		sim.saveSim(MODO);						// Salva resultado en BBDD
     }
  /*   
     public void runStructured(){

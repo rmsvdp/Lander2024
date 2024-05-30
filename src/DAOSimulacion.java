@@ -2,10 +2,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 
 public class DAOSimulacion {
 
@@ -107,14 +109,18 @@ public class DAOSimulacion {
 		
 		try {
 			Statement st = _c.createStatement();
-			String ssql ="";
-			long millis=System.currentTimeMillis(); 
-			java.sql.Date _date = new java.sql.Date(millis);
-					ssql = "INSERT INTO puntuacion (id_usuario,id_simulacion,tiempo,fuel,fecha) values(";
-					ssql = ssql + _s.getUser().getId()+ "," + _s.getId()+","
-					            + _s.getSe().getTiempo()+ "," +_s.getLander().getFuel_deposito()+",'"
-					            +_date + "')";
-					st.execute(ssql);
+			String ssql ="INSERT INTO puntuacion (id_usuario,id_simulacion,tiempo,fuel,fecha) values(?,?,?,?,?)";
+			PreparedStatement pstmt = _c.prepareStatement(ssql);
+			Timestamp t =  new java.sql.Timestamp(new java.util.Date().getTime());
+			
+			pstmt.setInt(1, _s.getUser().getId());
+			pstmt.setInt(2, _s.getId());
+			pstmt.setInt(3, _s.getSe().getTiempo());
+			pstmt.setDouble(4, _s.getLander().getFuel_deposito());
+			pstmt.setTimestamp(5, t);
+
+			pstmt.execute();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			result = false;
