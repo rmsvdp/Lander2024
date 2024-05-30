@@ -18,10 +18,10 @@ public class Simulacion {
 	// Para abandonar hay que introducir un nivel de impulso = -1
 	
 	// Constructor
-	public Simulacion(Integer user, Lander lander, Escenario planet) {
+	public Simulacion(Player _user, Lander lander, Escenario planet) {
 		super();
 		this.lander = lander;
-		this.user = new Player(user);
+		this.user = _user;
 		this.planet = planet;
 		this.timestamp = LocalDateTime.now();
 		init();

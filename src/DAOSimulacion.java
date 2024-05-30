@@ -40,9 +40,11 @@ public class DAOSimulacion {
 		Boolean result = true;
 		
 			if (salva_objeto(s,id_player,id_lander,id_escenario)) {// Salva Simulación
-				
+				System.out.println("sim objeto");
 				if (salva_datos(s)) {// Salva Datos simulacion
+					System.out.println("sim datos");
 					result =salva_puntuacion(s);// Salva Puntuación
+					System.out.println("sim ptos");
 				}
 				else result = false;
 			}
@@ -51,25 +53,26 @@ public class DAOSimulacion {
 	}
 	
 	public boolean salva_objeto(Simulacion _s,Integer id_player,Integer id_lander,Integer id_escenario) {
-		boolean result = false;
+		boolean result = true;
 		try {
 			Statement st = _c.createStatement();
 			long millis=System.currentTimeMillis(); 
 			java.sql.Date _now = new java.sql.Date(millis);
-			String ssql = "INSERT (id_usuario,id_lander,id_escenario,fecha) INTO simulacion values(";
+			String ssql = "INSERT INTO simulacion (id_usuario,id_lander,id_escenario,fecha)  values(";
 
 			ssql = ssql + id_player+ "," + id_lander+ "," +id_escenario;
-			ssql = ssql + "," + _now + ")";
-			result = st.execute(ssql);
-			if (result) {
-				// Rcuperar el Id generado por el motor de la base de datos
-				ssql = "SELECT id_sim FROM simulacion WHERE id_usuario="+id_player + "AND " +
+			ssql = ssql + ",'" + _now + "')";
+			st.execute(ssql);
+
+				// Recuperar el Id generado por el motor de la base de datos
+				ssql = "SELECT id_sim FROM simulacion WHERE id_usuario="+id_player + " AND " +
 				       "id_lander = " + id_lander + " AND id_escenario= "+ id_escenario + " AND " +
-					   "fecha = " + _now;	
+					   "fecha = '" + _now+"'";	
 				ResultSet rs = st.executeQuery(ssql);
 				rs.next();
 				_s.setId(rs.getInt(1)); // Ahora el objeto tiene la clave de persistencia en base de datos
-			}
+
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 			result = false;
@@ -85,8 +88,8 @@ public class DAOSimulacion {
 			Integer flag=0;
 			// Volcamos estructura de memoria en base de datos
 			for (DatosSim ds : _s.getSimData()) {
-					ssql = "INSERT (id_sim,tiempo,vel,fuel,dist) INTO datos_sim values(";
-					ssql = ssql + _s.getId()+ "," + ds.getAcel()+ "," +ds.getVel()+","+ds.getImpulso()+","+ds.getFuel()+","+ds.getTiempo();
+					ssql = "INSERT  INTO datos_sim  (id_sim,tiempo,vel,fuel,dist) values(";
+					ssql = ssql + _s.getId()+ "," + ds.getTiempo()+ "," +ds.getVel()+","+ds.getFuel()+","+ds.getDist();
 					ssql = ssql + ")";
 					st.execute(ssql);
 			}
@@ -107,10 +110,10 @@ public class DAOSimulacion {
 			String ssql ="";
 			long millis=System.currentTimeMillis(); 
 			java.sql.Date _date = new java.sql.Date(millis);
-					ssql = "INSERT (id_usuario,id_simulacion,tiempo,fuel,fecha) INTO puntuacion values(";
+					ssql = "INSERT INTO puntuacion (id_usuario,id_simulacion,tiempo,fuel,fecha) values(";
 					ssql = ssql + _s.getUser().getId()+ "," + _s.getId()+","
-					            + _s.getSe().getTiempo()+ "," +_s.getLander().getFuel_deposito()+","
-					            +_date + ")";
+					            + _s.getSe().getTiempo()+ "," +_s.getLander().getFuel_deposito()+",'"
+					            +_date + "')";
 					st.execute(ssql);
 		} catch (SQLException e) {
 			e.printStackTrace();

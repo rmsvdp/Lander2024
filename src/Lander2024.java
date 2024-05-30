@@ -17,9 +17,9 @@ public class Lander2024 {
 
     public void runOop(){
         System.out.println("Iniciando aplicación ...");
-        Integer idUser = get_access();
-        if (idUser!=0) {       	
-        	if (play(idUser)!=0) {
+        Player itUser = get_access();
+        if (itUser!=null) {       	
+        	if (play(itUser)!=0) {
         		reset_account();
         	}
         }
@@ -30,8 +30,10 @@ public class Lander2024 {
      * Concede acceso a la plataforma
      * @return
      */
-    public int get_access() {
+    // TODO pedir usuario / contraseña y crear objeto player si OK
+    public Player get_access() {
     	int _id ;	
+    	Player p=null;
     	System.out.println("Accediendo a la plataforma ...");
     	DAOMySql dms = new DAOMySql(MODO);
     	if (dms.c == null) {
@@ -40,17 +42,21 @@ public class Lander2024 {
     	}
     	else {
     		System.out.println("Acceso concedido!");
-    		_id = 1;	// Ususario RMS sólo para pruebas
+    		_id = 1;	// Usuario RMS sólo para pruebas
+    		DAOPlayer dp = new DAOPlayer(MODO);
+    		p = dp.getPlayerbyId(_id);
+    		System.out.println(p);
     		try {
 				dms.c.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				p = null;
 			}
     	}
-    	return _id;
+    	return p;
     }
     
-    public int play(Integer Usuario) {
+    public int play(Player Usuario) {
     	int res = -1; // juego no terminado
 		String[] opcs = {	"Elegir Modulo",
 							"Elegir Escenario",
@@ -211,11 +217,11 @@ public class Lander2024 {
 			
 	}
     
-    public void runSim(Integer user,Lander l, Escenario e) {
+    public void runSim(Player user,Lander l, Escenario e) {
     	
     	Double altura = 0.0;
     	Simulacion sim = new Simulacion(user,l,e);
-   	
+		sim.addSimData(); 			// Registra los datos de inicio de la simulación
     	do {						// bucle principal de la simulación
     		
     		sim.muestraPanel();					// Mostrar los resultados

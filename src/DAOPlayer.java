@@ -17,6 +17,30 @@ public class DAOPlayer {
 		else _c= null;
 	}
 	
+	
+	public Player getPlayerbyId(Integer _id) {
+		
+		Statement stm;
+		Player p;
+		try {
+			stm = _c.createStatement();
+			String ssql = "SELECT id_usuario,nick,pwd,grupo FROM usuario WHERE id_usuario = "+ _id;
+			ResultSet rs = stm.executeQuery(ssql);
+			if (rs.next()) { 
+				p = new Player(rs.getString(2),rs.getString(3),rs.getString(4));
+				p.setId(_id);
+				long millis=System.currentTimeMillis(); 
+				java.sql.Date _now = new java.sql.Date(millis);
+				p.setFechaLogin(_now);
+				return p;
+			}
+			else return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 	public Integer getIdbyPlayer(Player p) {
 		
 		Integer result = -1;
