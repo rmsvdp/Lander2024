@@ -17,6 +17,33 @@ public class DAOPlayer {
 		else _c= null;
 	}
 	
+	public Player getPlayerbyNickPass(String _nick,String _pass) {
+		
+		Statement stm;
+		Player p;
+		try {
+			stm = _c.createStatement();
+			String ssql = "SELECT id_usuario,nick,pwd,grupo FROM usuario WHERE nick ='"+_nick + "' AND " +
+			              "pwd ='"+_pass+"'";
+			ResultSet rs = stm.executeQuery(ssql);
+			if (rs.next()) { 
+				if (rs.getString(1)!=null) {
+					p = new Player(rs.getString(2),rs.getString(3),rs.getString(4));
+					p.setId(Integer.parseInt(rs.getString(1)));
+					long millis=System.currentTimeMillis(); 
+					java.sql.Date _now = new java.sql.Date(millis);
+					p.setFechaLogin(_now);
+					return p;
+				}
+				else return null;
+			}else return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	
 	
 	public Player getPlayerbyId(Integer _id) {
 		

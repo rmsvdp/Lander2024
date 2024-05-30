@@ -34,27 +34,38 @@ public class Lander2024 {
     public Player get_access() {
     	int _id ;	
     	Player p=null;
+    	
     	System.out.println("Accediendo a la plataforma ...");
     	DAOMySql dms = new DAOMySql(MODO);
     	if (dms.c == null) {
     		System.out.println("Plataforma no disponible!");
-    		_id=0;
+    		p=null;
     	}
     	else {
-    		System.out.println("Acceso concedido!");
-    		_id = 1;	// Usuario RMS sólo para pruebas
+    		Scanner sc = new Scanner(System.in);
+    		System.out.print("Introduce nombre de usuario: ");
+    		String _nick = sc.nextLine();
+    		System.out.print("Introduce contraseña: ");
+    		String _pass = sc.nextLine();
     		DAOPlayer dp = new DAOPlayer(MODO);
-    		p = dp.getPlayerbyId(_id);
-    		System.out.println(p);
-    		try {
-				dms.c.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				p = null;
-			}
+    		p = dp.getPlayerbyNickPass(_nick,_pass);
+    		if (p!=null) {
+        		System.out.print ("Acceso concedido! ");
+        		System.out.println(p);
+        		try {
+    				dms.c.close();
+    			} catch (SQLException e) {
+    				e.printStackTrace();
+    				p = null;
+    			}
+    		}
+    		else {
+    			System.out.println ("Credenciales incorrectas! ");
+    			p=null;
+    			}
     	}
     	return p;
-    }
+    } //Player get_access() 
     
     public int play(Player Usuario) {
     	int res = -1; // juego no terminado
