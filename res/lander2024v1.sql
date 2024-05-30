@@ -28,7 +28,7 @@ perfil_pot int default 0  -- Sólo se elige un perfil y no
 create table perfil_pot(
 id_perfil int not null,
 nivel int not null,
-valor float not null,
+valor double not null,
 primary key(id_perfil,nivel)
 );
 
@@ -52,28 +52,31 @@ id_sim int auto_increment primary key,
 id_usuario int not null, -- fk
 id_lander int not null,
 id_escenario int not null,
-fecha date not null
+fecha datetime not null
 );
 
 
 
 create table datos_sim(
+id_ds int auto_increment primary key,
 tiempo int not null,
-vel float not null,
-fuel float not null,
-dist float not null,
+vel double not null,
+fuel double not null,
+dist double not null,
 id_sim int not null
 );
  
 create table puntuacion(
+id_pun int auto_increment primary key,
 id_usuario int not null,
-id_simulacion int not null
+id_simulacion int not null,
 tiempo int not null,
-fuel float not null,
+fuel double not null,
 fecha timestamp);
 
 -- CONTRIBUCIONES AL DESARROLLO
 create table contrib(
+id_ctr int auto_increment primary key,
 name VARCHAR(64),
 phase VARCHAR(64)
 );

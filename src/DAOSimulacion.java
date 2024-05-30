@@ -5,6 +5,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -42,11 +43,11 @@ public class DAOSimulacion {
 		Boolean result = true;
 		
 			if (salva_objeto(s,id_player,id_lander,id_escenario)) {// Salva Simulación
-				System.out.println("sim objeto");
+				//System.out.println("Guardando Simulacion...");
 				if (salva_datos(s)) {// Salva Datos simulacion
-					System.out.println("sim datos");
+					//System.out.println("Registrando datos ...");
 					result =salva_puntuacion(s);// Salva Puntuación
-					System.out.println("sim ptos");
+					//System.out.println("Registrando puntuación..");
 				}
 				else result = false;
 			}
@@ -58,18 +59,26 @@ public class DAOSimulacion {
 		boolean result = true;
 		try {
 			Statement st = _c.createStatement();
+			/** Fecha sin h-m-s
 			long millis=System.currentTimeMillis(); 
 			java.sql.Date _now = new java.sql.Date(millis);
+			**/
+			/** Fecha con h-m-s
+			 * 
+			 */
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+			LocalDateTime _now = LocalDateTime.now();
+			String dateTimeString = _now.format(formatter);
+			
 			String ssql = "INSERT INTO simulacion (id_usuario,id_lander,id_escenario,fecha)  values(";
 
 			ssql = ssql + id_player+ "," + id_lander+ "," +id_escenario;
 			ssql = ssql + ",'" + _now + "')";
 			st.execute(ssql);
-
+				
 				// Recuperar el Id generado por el motor de la base de datos
-				ssql = "SELECT id_sim FROM simulacion WHERE id_usuario="+id_player + " AND " +
-				       "id_lander = " + id_lander + " AND id_escenario= "+ id_escenario + " AND " +
-					   "fecha = '" + _now+"'";	
+				ssql = "SELECT max(id_sim) FROM simulacion  WHERE id_usuario="+id_player + " AND " +
+				       "id_lander = " + id_lander + " AND id_escenario= "+ id_escenario ;
 				ResultSet rs = st.executeQuery(ssql);
 				rs.next();
 				_s.setId(rs.getInt(1)); // Ahora el objeto tiene la clave de persistencia en base de datos
@@ -88,6 +97,9 @@ public class DAOSimulacion {
 			Statement st = _c.createStatement();
 			String ssql ="";
 			Integer flag=0;
+
+			// Descartar el último registro
+			_s.getSimData().remove(_s.getSimData().size()-1);
 			// Volcamos estructura de memoria en base de datos
 			for (DatosSim ds : _s.getSimData()) {
 					ssql = "INSERT  INTO datos_sim  (id_sim,tiempo,vel,fuel,dist) values(";
