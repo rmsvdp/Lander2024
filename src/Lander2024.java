@@ -73,7 +73,7 @@ public class Lander2024 {
 							"Elegir Escenario",
 							"Iniciar Simulación",
 							"Puntuaciones",
-							"Creditos"};
+							"Ultimas 5 simulaciones"};
 		
 		Menu mppal = new Menu(opcs);
 		mppal.setTitulo("LANDER 2024");
@@ -112,8 +112,9 @@ public class Lander2024 {
 				System.out.println("\n** No implementado");
 				break;
 			case 5:
-				System.out.println("\nCREDITOS");
-				System.out.println("\n** No implementado");
+				System.out.println("\n 5 Últimas simulaciones con éxito");
+				System.out.println("-----------------------------------");
+				show_simulations(Usuario);
 				break;
 			case 0:
 				salir = true;
@@ -123,9 +124,55 @@ public class Lander2024 {
 		} // fin bucle principal
     	return res;
     }
-    public void reset_account() {
+    
+    public void show_simulations(Player _p) {
     	
-        
+    	DAOSimulacion ds = new DAOSimulacion(MODO);
+    	ArrayList<String> lastSim;
+    	ArrayList<DatosSim> datosSimElegidos;
+    	lastSim = ds.getSimulaciones(_p);
+    	Integer id_simulacion = 0;
+    	String [] opciones = new String [lastSim.size()];	// Tamaño de la array para el menu
+    	Integer [] ids = new Integer[lastSim.size()]; 
+		int i = 0;
+		for(String sim : lastSim){ // Guardar los nombre y cantidad del depósito de los modulos en la array para el menu
+			String reg[]=sim.split("#");
+			opciones[i] = reg[1]; // características
+			ids[i]=Integer.parseInt(reg[0]); // id_sim
+			i++;
+		}
+		Menu menu = new Menu(opciones);
+		menu.setTitulo("FECHA / ESCENARIO / MODULO ");
+
+			menu.mostrarMenu();
+			int opt = menu.eligeOpcion();
+			if(opt !=0){
+				id_simulacion= ids[opt-1];
+			}
+			else {
+				System.out.println("Elección cancelada");
+				id_simulacion=0;
+			}
+		if (id_simulacion!=0) {
+			
+			datosSimElegidos = ds.getDatosSimbyId(id_simulacion);
+	        System.out.println("TIEMPO  DISTANCIA   VEL        FUEL    "); // Tablero de indicadores
+	        System.out.println("---------------------------------------");
+			DecimalFormat df = new DecimalFormat("+0000.00;-0000.00");
+	        for (DatosSim _datos : datosSimElegidos) {
+				
+				 // Muestra valores de los parámetros de la simulación, formateados en columnas
+		         System.out.printf("%03d    %s    %s    %04d        ",
+		        		           _datos.getTiempo(),df.format(_datos.getDist()),df.format(_datos.getVel()),_datos.getFuel()
+		        		          );
+			} //recorre simulacion
+			
+		} // Si elegida una 
+		
+    }  //show_simulations(Player _p)
+    
+    
+    public void reset_account() {
     	
     	
     }

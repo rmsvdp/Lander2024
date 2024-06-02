@@ -142,18 +142,58 @@ public class DAOSimulacion {
 	
 	/** 
 	 * Trae de la base de datos, todas las 10 últimas simulaciones
+	 * create view v_detalle_sim as 
+		select s.id_sim, s.fecha as FECHA, s.id_usuario, l.nombre as MODULO ,e.nombre as ESCENARIO
+		create view v_punt_full as 
+	   select u.nick as JUGADOR, e.nombre as ESCENARIO, l.nombre, p.tiempo as TIEMPO, p.fuel as FUEL
 	 * @return
 	 */
-	public ArrayList<Simulacion> getSimulaciones(Integer idUsuario){
+	public ArrayList<String> getSimulaciones(Player _p){
+		ArrayList<String> als = new ArrayList<String>();
+		try {
+			Statement stm = _c.createStatement();
+			String ssql = "SELECT * FROM v_detalle_sim WHERE id_usuario ="+
+			_p.getId() + " ORDER BY fecha DESC LIMIT 5";
+			ResultSet rs = stm.executeQuery(ssql);
+			while (rs.next()) {
+				//-- Datos principales simulacion
+				als.add(rs.getInt(1)+"#"+rs.getString("FECHA")+ " " + rs.getString("ESCENARIO")+" " + rs.getString("MODULO"));
+			}
+			return als;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 		
-		return null;
 	}
 	/**
 	 * Recupera los datos de una simulación
 	 * @return
 	 */
-	public ArrayList<DatosSim> getDatos(){
+	public ArrayList<DatosSim> getDatosSimbyId(Integer id_simulacion){
 		
-		return null;
-	}
-}
+		ArrayList<DatosSim> ds = new ArrayList<DatosSim>();
+		
+		try {
+			Statement stm = _c.createStatement();
+			String ssql = "SELECT tiempo,vel,fuel,dist FROM datos_sim WHERE id_sim = " +
+			               id_simulacion +" ORDER BY tiempo ASC";
+			
+			ResultSet rs = stm.executeQuery(ssql);
+			while (rs.next()) {
+				//-- Datos de la simulacion
+				//(double dist, double acel, double vel, double impulso, double fuel, int tiempo)
+				ds.add(new DatosSim(rs.getDouble("dist"),0.0, rs.getDouble("vel"),
+						            0.0,rs.getDouble("fuel"), rs.getInt("tiempo")));
+			}
+			return ds;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}//getDatosSimbyId
+	
+} // DAOSimulacion

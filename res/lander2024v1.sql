@@ -92,5 +92,32 @@ ALTER TABLE confg_pot  ADD FOREIGN KEY (id_la)        references lander(id_lande
 ALTER TABLE confg_pot  ADD FOREIGN KEY (id_perfil) 	  references perfil_pot(id_perfil);
 ALTER TABLE datos_sim  ADD FOREIGN KEY (id_sim)      references simulacion(id_sim);
 
+-- VISTAS
+-- Listado de datos de simulación ordenados por simulación y tiempo (ascendente)
+
+create view v_datosSim as 
+select id_sim, tiempo as TIEMPO, vel as VELOCIDAD, fuel as FUEL, dist as DISTANCIA
+from datos_sim
+order by id_sim, tiempo ASC;
+
+-- Listado de los detalles de una simulación
+
+create view v_detalle_sim as 
+select s.id_sim, s.fecha as FECHA, s.id_usuario, l.nombre as MODULO ,e.nombre as ESCENARIO
+from simulacion s
+inner join escenario e on e.id_escenario = s.id_escenario
+inner join lander l on l.id_lander = s.id_lander;
+
+-- Tabla de puntuaciones con escenario y lander
+
+create view v_punt_full as 
+select u.nick as JUGADOR, e.nombre as ESCENARIO, l.nombre, p.tiempo as TIEMPO, p.fuel as FUEL
+from puntuacion p
+inner join usuario u on u.id_usuario = p.id_usuario
+inner join simulacion s on s.id_sim = p.id_simulacion
+inner join escenario e on e.id_escenario = s.id_escenario
+inner join lander l on l.id_lander = s.id_lander
+;
+
 -- FUNCIONES Y PROCEDIMIENTOS
 

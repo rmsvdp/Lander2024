@@ -35,5 +35,9 @@ public class DatosSim {
 	public int getTiempo() {		return tiempo;	}
 	public void setTiempo(int tiempo) {		this.tiempo = tiempo;	}
     
+	public String toString() {
+		
+		return "";
+	}
 	
 }
