@@ -162,16 +162,23 @@ public class Lander2024 {
 	        for (DatosSim _datos : datosSimElegidos) {
 				
 				 // Muestra valores de los parámetros de la simulación, formateados en columnas
-		         System.out.printf("%03d    %s    %s    %04d        ",
-		        		           _datos.getTiempo(),df.format(_datos.getDist()),df.format(_datos.getVel()),_datos.getFuel()
+		         System.out.printf("%03d    %s    %s    %04d        \n",
+		        		           _datos.getTiempo(),df.format(_datos.getDist()),df.format(_datos.getVel()),
+		        		           (int) (_datos.getFuel())
 		        		          );
 			} //recorre simulacion
-			
+			waitEnter();
 		} // Si elegida una 
 		
     }  //show_simulations(Player _p)
     
     
+    
+    public void waitEnter() {
+    	Scanner sc = new Scanner(System.in);
+    	System.out.println("\nPulsa Enter para continuar ...");
+    	sc.nextLine();
+    }
     public void reset_account() {
     	
     	
