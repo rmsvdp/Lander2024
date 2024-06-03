@@ -1,8 +1,12 @@
+package DAORelacional;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import Modelo.Lander;
+import Modelo.PerfilPot;
 
 public class DAOLander {
 

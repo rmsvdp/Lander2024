@@ -1,8 +1,11 @@
+package Modelo;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import DAORelacional.DAOSimulacion;
 
 public class Simulacion {
 

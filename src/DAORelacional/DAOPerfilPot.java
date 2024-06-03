@@ -1,7 +1,10 @@
+package DAORelacional;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import Modelo.PerfilPot;
 
 public class DAOPerfilPot {
 

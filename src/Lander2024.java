@@ -2,6 +2,21 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import DAORelacional.DAOEscenario;
+import DAORelacional.DAOLander;
+import DAORelacional.DAOMySql;
+import DAORelacional.DAOPlayer;
+import DAORelacional.DAOPuntuaciones;
+import DAORelacional.DAOSimulacion;
+import Modelo.DatosSim;
+import Modelo.Escenario;
+import Modelo.Lander;
+import Modelo.PerfilPot;
+import Modelo.Player;
+import Modelo.Puntuacion;
+import Modelo.Simulacion;
+import Tools.Menu;
+
 import java.sql.*;
 
 public class Lander2024 {
@@ -108,8 +123,8 @@ public class Lander2024 {
 				//System.out.println("\nINICIAR SIMULACION");
 				break;
 			case 4:
-				System.out.println("\nPUNTUACIONES");
-				System.out.println("\n** No implementado");
+				//System.out.println("\nPUNTUACIONES");
+				puntuaciones();
 				break;
 			case 5:
 				System.out.println("\n 5 Últimas simulaciones con éxito");
@@ -300,6 +315,75 @@ public class Lander2024 {
     	if (sim.show_result())
     		sim.saveSim(MODO);						// Salva resultado en BBDD
     }
+    
+	public void puntuaciones() {	
+		
+		DAOSimulacion ds = new DAOSimulacion(MODO);
+				
+		Statement stm;
+		
+		try{
+		
+			stm=ds._c.createStatement();
+				
+			Scanner teclado = new Scanner(System.in);
+		
+			String[] opcPun ={"Puntuación por tiempo", "Puntuación por eficiencia"};
+		
+			Menu mpun = new Menu(opcPun);
+			mpun.setTitulo("Mejores Jugadores");
+			Integer opPun = 0;
+			boolean salirPun = false;
+		
+				while(!salirPun){
+			
+					mpun.mostrarMenu();
+					opPun = mpun.eligeOpcion();
+			
+						switch(opPun) {
+							case 1:
+								System.out.println(">>Puntuaciones por tiempo<<\n");
+								ResultSet rs = stm.executeQuery("SELECT * FROM Puntuaciones_Por_Tiempos");
+									
+									while(rs.next()){
+										System.out.println(rs.getString(1)+"   "+rs.getInt(2)+"   "+rs.getDate(3));
+									}
+									rs.close();
+								break;
+								
+							case 2:
+								System.out.println(">>Puntuaciones por eficiencia<<\n");
+								MostrarPuntuacion();
+								break;
+				
+							case 0:
+							salirPun=true;
+							break;
+						}
+				}
+		}
+	
+		catch(SQLException e){
+			System.out.println("Error Base de Datos SQL");
+			System.out.println(e);
+		}
+	}
+	public void MostrarPuntuacion(){
+		DAOPuntuaciones dp = new DAOPuntuaciones(MODO);
+		DAOPlayer dpp = new DAOPlayer(MODO);
+		ArrayList <Puntuacion> arrayPuntuaciones = dp.getPuntuaciones();
+		int posi = 0;
+		for(Puntuacion pt : arrayPuntuaciones){
+			if(posi < 10){
+				Player p = dpp.getPlayerbyId(pt.getId_Usuario());
+				System.out.println("Usuario: "+p.getNombre()+", nivel de combustible: "+pt.getFuel());
+				posi++;
+
+			}
+		}
+	}   
+    
+    
  /*   
     public void runStructured(){
         double dist=0;                     // Distancia a la superficie m

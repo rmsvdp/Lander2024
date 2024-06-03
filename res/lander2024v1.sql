@@ -107,7 +107,14 @@ select s.id_sim, s.fecha as FECHA, s.id_usuario, l.nombre as MODULO ,e.nombre as
 from simulacion s
 inner join escenario e on e.id_escenario = s.id_escenario
 inner join lander l on l.id_lander = s.id_lander;
+-- Tabla de puntuaciones por tiempos
 
+CREATE VIEW Puntuaciones_Por_Tiempos AS
+    SELECT U.nick, P.tiempo, P.fecha
+        FROM usuario U INNER JOIN puntuacion P
+            ON U.id_usuario = P.id_usuario
+            ORDER BY tiempo ASC LIMIT 10;
+			 
 -- Tabla de puntuaciones con escenario y lander
 
 create view v_punt_full as 

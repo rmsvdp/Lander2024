@@ -1,3 +1,4 @@
+package Modelo;
 import java.time.LocalDateTime;
 
 public class DatosSim {

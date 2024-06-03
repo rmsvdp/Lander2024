@@ -1,3 +1,4 @@
+package DAORelacional;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +8,11 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import Modelo.Simulacion;
+import Modelo.DatosSim;
+import Modelo.Player;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 

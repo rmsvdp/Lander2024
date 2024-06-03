@@ -1,6 +1,6 @@
 eclipse.preferences.version=1
-encoding//src/Lander.java=UTF-8
 encoding//src/Lander2024.java=UTF-8
-encoding//src/Menu.java=UTF-8
-encoding//src/SimEngine.java=UTF-8
+encoding//src/Modelo/Lander.java=UTF-8
+encoding//src/Modelo/SimEngine.java=UTF-8
+encoding//src/Tools/Menu.java=UTF-8
 encoding/<project>=windows-1252
